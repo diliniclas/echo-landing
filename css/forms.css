@@ -1,0 +1,824 @@
+/* ============================================================
+   forms.css — canonical form & selection system for In&Out
+   Single source of truth for everything that isn't a button.
+   Import alongside chrome.css and buttons.css.
+
+     <link rel="stylesheet" href="chrome.css" />
+     <link rel="stylesheet" href="buttons.css" />
+     <link rel="stylesheet" href="forms.css" />
+
+   Anatomy & class summary:
+     Field        .field  .field-label  .field-hint  .field-error
+     Text input   .input  .input-sm  .input-lg  .has-icon
+     Textarea     .textarea
+     Select       .select
+     Wrap         .input-icon  (positions a left/right icon)
+     Checkbox     .checkbox
+     Radio        .radio
+     Option card  .option-card  (large clickable radio/check card)
+     Switch       .switch
+     Segmented    .segmented  .segmented > button.is-active
+     Chip         .chip        (selectable) + .is-on
+                  .chip.removable  (entered tag with × button)
+                  Sizes: .chip-sm  .chip-lg
+     Tag          .tag         (static category label)
+                  Tones: .tag-brand .tag-warn .tag-danger .tag-info .tag-neutral
+                  Styles: .tag-solid (filled) / default = soft fill
+     Badge        .badge       (small count/state, e.g. NEU · 5)
+                  Tones: .badge-brand .badge-neutral .badge-warn .badge-danger
+     Status dot   .status-dot  + .is-live .is-draft .is-off
+     Status badge .status-badge + .is-live .is-draft .is-off .is-err (icon seal)
+     Kicker       .kicker      (eyebrow pill, e.g. "EMPFOHLEN")
+   ============================================================ */
+
+:root {
+  /* Field sizing */
+  --field-radius: 10px;
+  --field-h-sm: 34px;
+  --field-h-md: 42px;
+  --field-h-lg: 48px;
+  --field-px:   14px;
+  --field-fs:   14px;
+
+  /* Selection */
+  --sel-radius: 10px;
+  --sel-active-bg:    rgba(15, 191, 106, 0.06);
+  --sel-active-ring:  0 0 0 3px rgba(15, 191, 106, 0.12);
+
+  /* Chip */
+  --chip-radius: 999px;
+  --chip-fs: 13px;
+
+  /* Tag tones */
+  --tag-brand-bg:   rgba(15,191,106,0.10);  --tag-brand-fg:   var(--brand-deep);
+  --tag-info-bg:    #dbeafe;                --tag-info-fg:    #1e40af;
+  --tag-warn-bg:    rgba(245,158,11,0.14);  --tag-warn-fg:    #92400e;
+  --tag-danger-bg:  #fee2e2;                --tag-danger-fg:  #991b1b;
+  --tag-neutral-bg: var(--bg-soft);         --tag-neutral-fg: var(--ink-2);
+
+  /* Focus ring */
+  --focus-ring: 0 0 0 3px rgba(15, 191, 106, 0.16);
+}
+
+/* ------------------------------------------------------------
+   FIELD (label, hint, error)
+   ------------------------------------------------------------ */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.field-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.field-row.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+.field-label {
+  font-size: 12px; font-weight: 600; color: var(--ink-2);
+  letter-spacing: 0.02em;
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+}
+.field-label .opt { color: var(--muted); font-weight: 500; font-size: 11px; }
+.field-label .req, .field label .req { color: #b91c1c; font-weight: 700; }
+
+.field-hint  { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+.field-error { font-size: 11.5px; color: #b91c1c; line-height: 1.5; font-weight: 600; }
+
+/* ------------------------------------------------------------
+   INPUT / TEXTAREA / SELECT — share one visual language
+   ------------------------------------------------------------ */
+.input, .textarea, .select {
+  width: 100%;
+  height: var(--field-h-md);
+  padding: 0 var(--field-px);
+  font: inherit; font-size: var(--field-fs);
+  background: #fff; color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--field-radius);
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.input::placeholder, .textarea::placeholder { color: #b0b5bd; }
+
+.input:hover, .textarea:hover, .select:hover { border-color: #cdd1d6; }
+.input:focus, .textarea:focus, .select:focus {
+  border-color: var(--brand);
+  box-shadow: var(--focus-ring);
+}
+
+.input:disabled, .textarea:disabled, .select:disabled {
+  background: var(--bg-soft); color: var(--muted); cursor: not-allowed;
+  border-color: var(--line);
+}
+
+/* Validation states */
+.input.is-error, .textarea.is-error, .select.is-error { border-color: #ef4444; }
+.input.is-error:focus, .textarea.is-error:focus, .select.is-error:focus {
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.16);
+}
+.input.is-success, .textarea.is-success, .select.is-success { border-color: #16a34a; }
+
+/* Sizes */
+.input-sm { height: var(--field-h-sm); padding: 0 12px; font-size: 13px; border-radius: 8px; }
+.input-lg { height: var(--field-h-lg); padding: 0 16px; font-size: 15px; }
+
+/* Textarea overrides */
+.textarea {
+  height: auto; min-height: 110px; padding: 12px 14px;
+  resize: vertical; line-height: 1.55;
+}
+
+/* Select — custom chevron */
+.select {
+  appearance: none; -webkit-appearance: none; cursor: pointer;
+  padding-right: 38px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat; background-position: right 12px center;
+}
+
+/* Select dropdown options — replaces OS blue with brand styling
+   (limited cross-browser support: Chromium honours bg/color, Safari ignores). */
+.select option {
+  background: #fff;
+  color: var(--ink);
+  padding: 8px 12px;
+  font: inherit;
+}
+.select option:hover,
+.select option:focus,
+.select option:checked {
+  background: var(--brand-soft);
+  color: var(--ink);
+}
+.select option:disabled {
+  color: var(--muted);
+}
+
+/* Input with icon — wrap input in <span class="input-icon"> */
+.input-icon { position: relative; display: block; }
+.input-icon > svg,
+.input-icon > .ico {
+  position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+  width: 16px; height: 16px;
+  color: var(--muted); pointer-events: none;
+}
+.input-icon > .input,
+.input-icon > .select { padding-left: 40px; }
+.input-icon.right > svg,
+.input-icon.right > .ico { left: auto; right: 14px; }
+.input-icon.right > .input,
+.input-icon.right > .select { padding-left: var(--field-px); padding-right: 40px; }
+
+/* Modifier — when an icon lives in a sibling wrapper outside .input-icon
+   (e.g. a <div class="input-wrap"> layout from a legacy page), put .has-icon
+   on the input itself to reserve padding for it. */
+.input.has-icon,
+.select.has-icon { padding-left: 40px; }
+
+/* Affix (prefix/suffix like €, kg, .com) — wrap input + span in .input-affix */
+.input-affix {
+  display: inline-flex; align-items: stretch; width: 100%;
+  border: 1px solid var(--line); border-radius: var(--field-radius);
+  background: #fff; overflow: hidden;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.input-affix:focus-within { border-color: var(--brand); box-shadow: var(--focus-ring); }
+.input-affix .affix {
+  display: inline-flex; align-items: center; padding: 0 12px;
+  background: var(--bg-soft); color: var(--ink-2);
+  font-size: 13px; font-weight: 500;
+  border-right: 1px solid var(--line);
+}
+.input-affix .affix.right { border-right: 0; border-left: 1px solid var(--line); }
+.input-affix .input {
+  border: 0; border-radius: 0; box-shadow: none; flex: 1; min-width: 0;
+}
+.input-affix .input:focus { box-shadow: none; }
+
+/* ------------------------------------------------------------
+   CHECKBOX  &  RADIO — custom-styled native controls
+   Wrap as:  <label class="checkbox"><input type="checkbox"/><span/>Label</label>
+   ------------------------------------------------------------ */
+.checkbox, .radio {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--ink); cursor: pointer; line-height: 1.45;
+  user-select: none;
+}
+.checkbox > input, .radio > input {
+  position: absolute; opacity: 0; pointer-events: none;
+}
+.checkbox > .mark, .radio > .mark {
+  width: 18px; height: 18px; flex-shrink: 0; background: #fff;
+  border: 1.5px solid #c8ccd2;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+.checkbox > .mark { border-radius: 5px; }
+.radio    > .mark { border-radius: 50%; position: relative; }
+
+/* Hover */
+.checkbox:hover > .mark, .radio:hover > .mark { border-color: var(--ink-2); }
+
+/* Checked — checkbox */
+.checkbox > input:checked + .mark {
+  background: var(--brand); border-color: var(--brand);
+}
+.checkbox > input:checked + .mark::after {
+  content: ""; width: 5px; height: 9px;
+  border-right: 2px solid #fff; border-bottom: 2px solid #fff;
+  transform: rotate(45deg) translate(-1px,-1px);
+}
+
+/* Checked — radio */
+.radio > input:checked + .mark { border-color: var(--brand); border-width: 5px; }
+
+/* Indeterminate checkbox */
+.checkbox > input:indeterminate + .mark {
+  background: var(--brand); border-color: var(--brand);
+}
+.checkbox > input:indeterminate + .mark::after {
+  content: ""; width: 8px; height: 2px; background: #fff; border-radius: 1px;
+}
+
+/* Focus */
+.checkbox > input:focus-visible + .mark,
+.radio > input:focus-visible + .mark { box-shadow: var(--focus-ring); }
+
+/* Disabled */
+.checkbox.is-disabled, .radio.is-disabled,
+.checkbox:has(input:disabled), .radio:has(input:disabled) {
+  cursor: not-allowed; color: var(--muted);
+}
+.checkbox:has(input:disabled) > .mark,
+.radio:has(input:disabled) > .mark {
+  background: var(--bg-soft); border-color: var(--line);
+}
+
+/* ------------------------------------------------------------
+   OPTION CARD — large clickable radio or check card
+   Use:  <label class="option-card"><input type="radio|checkbox"/>
+            <span class="oc-mark"/>
+            <span class="oc-body"><strong>Title</strong><em>Hint</em></span>
+         </label>
+   ------------------------------------------------------------ */
+.option-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 12px; cursor: pointer;
+  font: inherit; text-align: left; width: 100%;
+  transition: border-color .15s ease, background .15s ease, box-shadow .15s ease;
+}
+.option-card:hover { border-color: #cdd1d6; }
+.option-card > input { position: absolute; opacity: 0; pointer-events: none; }
+.option-card .oc-mark {
+  width: 20px; height: 20px; flex-shrink: 0;
+  border: 1.5px solid #c8ccd2; background: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background .15s ease, border-color .15s ease;
+}
+.option-card[data-kind="radio"] .oc-mark { border-radius: 50%; }
+.option-card[data-kind="check"] .oc-mark,
+.option-card .oc-mark { border-radius: 6px; }
+.option-card[data-kind="radio"] .oc-mark { border-radius: 50%; }
+
+.option-card .oc-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.option-card .oc-body strong { font-size: 14px; font-weight: 700; color: var(--ink); letter-spacing: -0.005em; }
+.option-card .oc-body em { font-size: 12px; font-style: normal; color: var(--muted); line-height: 1.45; }
+
+/* Selected */
+.option-card:has(input:checked),
+.option-card.is-on {
+  border-color: var(--brand);
+  background: var(--sel-active-bg);
+  box-shadow: var(--sel-active-ring);
+}
+.option-card[data-kind="radio"]:has(input:checked) .oc-mark,
+.option-card[data-kind="radio"].is-on .oc-mark {
+  border-color: var(--brand); border-width: 6px; background: #fff;
+}
+.option-card[data-kind="check"]:has(input:checked) .oc-mark,
+.option-card[data-kind="check"].is-on .oc-mark,
+.option-card:not([data-kind]):has(input:checked) .oc-mark,
+.option-card:not([data-kind]).is-on .oc-mark {
+  background: var(--brand); border-color: var(--brand); color: #fff;
+}
+.option-card[data-kind="check"]:has(input:checked) .oc-mark::after,
+.option-card[data-kind="check"].is-on .oc-mark::after,
+.option-card:not([data-kind]):has(input:checked) .oc-mark::after,
+.option-card:not([data-kind]).is-on .oc-mark::after {
+  content: ""; width: 5px; height: 9px;
+  border-right: 2px solid #fff; border-bottom: 2px solid #fff;
+  transform: rotate(45deg) translate(-1px,-1px);
+}
+
+/* ------------------------------------------------------------
+   SWITCH — for boolean toggles
+   Use:  <label class="switch"><input type="checkbox"/><span class="track"/></label>
+   ------------------------------------------------------------ */
+.switch {
+  display: inline-flex; align-items: center; gap: 10px;
+  cursor: pointer; user-select: none;
+  font-size: 13px; color: var(--ink-2);
+}
+.switch > input { position: absolute; opacity: 0; pointer-events: none; }
+.switch .track {
+  width: 38px; height: 22px; background: #d6d8dc; border-radius: 999px;
+  position: relative; flex-shrink: 0;
+  transition: background .15s ease;
+}
+.switch .track::after {
+  content: ""; position: absolute; top: 2px; left: 2px;
+  width: 18px; height: 18px; background: #fff; border-radius: 50%;
+  transition: transform .18s cubic-bezier(.22,1,.36,1);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.18);
+}
+.switch > input:checked + .track { background: var(--brand); }
+.switch > input:checked + .track::after { transform: translateX(16px); }
+.switch > input:focus-visible + .track { box-shadow: var(--focus-ring); }
+
+/* Small switch */
+.switch.switch-sm .track { width: 30px; height: 18px; }
+.switch.switch-sm .track::after { width: 14px; height: 14px; }
+.switch.switch-sm > input:checked + .track::after { transform: translateX(12px); }
+
+/* ------------------------------------------------------------
+   SEGMENTED CONTROL — toggle group on a soft track
+   Use:  <div class="segmented">
+           <button class="is-active">All</button><button>Active</button>...
+         </div>
+   ------------------------------------------------------------ */
+.segmented {
+  display: inline-flex; padding: 3px;
+  background: var(--bg-soft); border: 1px solid var(--line);
+  border-radius: 10px; gap: 2px;
+}
+.segmented > button, .segmented > a {
+  appearance: none; background: transparent; border: 0;
+  padding: 7px 14px; border-radius: 7px;
+  font: inherit; font-family: inherit; font-size: 13px; font-weight: 600;
+  color: var(--ink-2); cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+}
+.segmented > button:hover, .segmented > a:hover { color: var(--ink); }
+.segmented > button.is-active, .segmented > a.is-active {
+  background: #fff; color: var(--ink);
+  box-shadow: 0 1px 2px rgba(15,23,42,0.06);
+}
+.segmented.is-pill { border-radius: 999px; }
+.segmented.is-pill > button, .segmented.is-pill > a { border-radius: 999px; }
+
+/* Wrapping variant — many/long options (form fields, narrow columns).
+   Options wrap onto multiple rows and grow to fill each row evenly. */
+.segmented.is-wrap { flex-wrap: wrap; }
+.segmented.is-wrap > button, .segmented.is-wrap > a { flex: 1 1 auto; }
+
+/* ------------------------------------------------------------
+   CHIP — selectable, pill-shaped
+   Use:  <button class="chip">Label</button>
+         <button class="chip is-on">Label ✓</button>
+   ------------------------------------------------------------ */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 14px; height: 34px;
+  background: #fff; color: var(--ink-2);
+  border: 1px solid var(--line); border-radius: var(--chip-radius);
+  font: inherit; font-family: inherit; font-size: var(--chip-fs); font-weight: 500;
+  cursor: pointer; white-space: nowrap;
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.chip:hover { border-color: #cdd1d6; color: var(--ink); }
+.chip:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+.chip.is-on {
+  background: var(--ink); color: #fff; border-color: var(--ink); font-weight: 600;
+}
+.chip.is-on:hover { background: #000; border-color: #000; }
+.chip.is-on > svg { color: #fff; }
+
+/* Numeric count inside chip (e.g. "Active 12") */
+.chip .count {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 18px; padding: 0 6px; height: 18px; margin-left: 2px;
+  border-radius: 999px;
+  background: var(--bg-soft); color: var(--ink-2);
+  font-size: 10.5px; font-weight: 700;
+}
+.chip.is-on .count { background: rgba(255,255,255,0.18); color: #fff; }
+
+/* Sizes */
+.chip-sm { padding: 5px 10px; height: 26px; font-size: 12px; }
+.chip-lg { padding: 10px 18px; height: 40px; font-size: 14px; }
+
+/* Removable chip (entered tag) — has an × button inside */
+.chip.removable {
+  background: var(--brand-soft); color: var(--brand-deep); border-color: var(--brand-soft);
+  padding: 4px 6px 4px 12px; font-weight: 600;
+}
+.chip.removable > .x {
+  width: 18px; height: 18px; border-radius: 50%; border: 0;
+  background: transparent; color: var(--ink-2); padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+.chip.removable > .x:hover { background: rgba(15, 23, 42, 0.10); color: var(--ink); }
+
+/* Chip-input wrapper — flex container of removable chips + text input
+   Use:  <div class="chip-input-wrap">
+           <span class="chip removable">…</span>
+           <input class="chip-input" placeholder="Stichwort eingeben…" />
+         </div> */
+.chip-input-wrap {
+  display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 10px;
+  border: 1px solid var(--line); border-radius: var(--field-radius);
+  background: #fff; min-height: 50px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.chip-input-wrap:focus-within {
+  border-color: var(--brand); box-shadow: var(--focus-ring);
+}
+.chip-input {
+  border: 0; outline: 0; background: transparent;
+  font: inherit; font-family: inherit; font-size: 13px;
+  min-width: 160px; flex: 1; padding: 4px 6px;
+}
+.chip-input::placeholder { color: #aab0ba; }
+
+/* Chip row — utility container with sensible wrap */
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+/* ------------------------------------------------------------
+   TAG — static category / status label (NOT interactive)
+   Default tone is "neutral soft". Mix with .tag-* for semantics.
+   .tag-solid swaps to a filled treatment.
+   ------------------------------------------------------------ */
+.tag {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px; border-radius: 999px;
+  background: var(--tag-neutral-bg); color: var(--tag-neutral-fg);
+  font-size: 11px; font-weight: 600; letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.tag svg { width: 11px; height: 11px; }
+.tag-brand   { background: var(--tag-brand-bg);   color: var(--tag-brand-fg); }
+.tag-info    { background: var(--tag-info-bg);    color: var(--tag-info-fg); }
+.tag-warn    { background: var(--tag-warn-bg);    color: var(--tag-warn-fg); }
+.tag-danger  { background: var(--tag-danger-bg);  color: var(--tag-danger-fg); }
+.tag-neutral { background: var(--tag-neutral-bg); color: var(--tag-neutral-fg); }
+
+/* Solid variant — flips background to the strong tone */
+.tag.tag-solid              { background: var(--ink);  color: #fff; }
+.tag-brand.tag-solid        { background: var(--brand); color: #fff; }
+.tag-info.tag-solid         { background: #1e40af; color: #fff; }
+.tag-warn.tag-solid         { background: #b45309; color: #fff; }
+.tag-danger.tag-solid       { background: #b91c1c; color: #fff; }
+.tag-neutral.tag-solid      { background: var(--ink-2); color: #fff; }
+
+/* Uppercase variant — for eyebrows / status callouts */
+.tag.is-upper { text-transform: uppercase; letter-spacing: 0.06em; font-size: 10px; }
+
+/* Tag with leading status dot */
+.tag .dot {
+  width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+}
+.tag-brand .dot, .tag-brand .live-dot { background: var(--brand); }
+
+/* ------------------------------------------------------------
+   BADGE — small numeric/state pill (count of unread, NEU, BALD)
+   ------------------------------------------------------------ */
+.badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 18px; height: 18px; padding: 0 6px;
+  border-radius: 999px;
+  background: var(--bg-soft); color: var(--ink-2);
+  font-size: 10.5px; font-weight: 700; letter-spacing: 0.02em;
+  line-height: 1;
+}
+.badge-brand   { background: var(--brand); color: #fff; }
+.badge-warn    { background: #f59e0b; color: #fff; }
+.badge-danger  { background: #ef4444; color: #fff; }
+.badge-info    { background: #2563eb; color: #fff; }
+.badge-neutral { background: var(--ink-2); color: #fff; }
+
+/* ------------------------------------------------------------
+   STATUS DOT — leading dot for "Live", "Draft", "Inactive"
+   Use inside a tag or inline next to text.
+   ------------------------------------------------------------ */
+.status-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  display: inline-block; background: var(--muted);
+  flex-shrink: 0;
+}
+.status-dot.is-live  { background: var(--brand); box-shadow: 0 0 0 3px rgba(15,191,106,0.20); }
+.status-dot.is-draft { background: #f59e0b; }
+.status-dot.is-off   { background: #94a3b8; }
+.status-dot.is-err   { background: #ef4444; }
+
+/* ------------------------------------------------------------
+   STATUS BADGE — icon-bearing sibling of .status-dot.
+   Use when a status needs a glyph (a ✓ "verified/active" seal),
+   not just a coloured dot. Same tone vocabulary as .status-dot.
+   Use:  <span class="status-badge is-live" aria-label="Aktiv">
+           <svg viewBox="0 0 16 16">…</svg>
+         </span>
+   Sizes: default 22px · .status-badge-sm 18px · .status-badge-lg 28px
+   ------------------------------------------------------------ */
+.status-badge {
+  --status-badge-size: 22px;
+  width: var(--status-badge-size); height: var(--status-badge-size);
+  border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: #fff; background: var(--muted); flex-shrink: 0;
+}
+.status-badge svg { width: 64%; height: 64%; display: block; }
+.status-badge-sm { --status-badge-size: 18px; }
+.status-badge-lg { --status-badge-size: 28px; }
+.status-badge.is-live  { background: var(--brand); }
+.status-badge.is-draft { background: #f59e0b; }
+.status-badge.is-off   { background: #94a3b8; }
+.status-badge.is-err   { background: #ef4444; }
+
+/* ------------------------------------------------------------
+   KICKER — eyebrow pill above a page header
+   Use:  <span class="kicker">EMPFOHLEN</span>
+   ------------------------------------------------------------ */
+.kicker {
+  display: inline-block; padding: 4px 10px; border-radius: 999px;
+  background: var(--brand-soft); color: var(--brand-deep);
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.10em;
+}
+.kicker.is-mono {
+  font-family: "JetBrains Mono", monospace;
+  font-weight: 600; letter-spacing: 0.14em;
+}
+.kicker.is-neutral { background: var(--bg-soft); color: var(--ink-2); }
+
+/* ------------------------------------------------------------
+   COMBOBOX — accessible JS dropdown that replaces native <select>
+   The anchor inherits .select styling so it sits in the same
+   vertical rhythm as .input / .textarea. The popup is portaled
+   to <body> and positioned via fixed coords (see combobox.jsx).
+   ------------------------------------------------------------ */
+.combobox { position: relative; display: block; width: 100%; }
+
+.cb-anchor {
+  /* .select already provides border, padding-right (chevron), height, font.
+     We only need to override the bits that differ for a <button>. */
+  text-align: left;
+  display: inline-flex; align-items: center;
+  width: 100%;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+/* When the anchor is an inline pill (e.g. .sort-select), let the combobox
+   behave like the original native control: auto-width, inline-block. */
+.combobox:has(> .sort-select.cb-anchor) { display: inline-block; width: auto; }
+.combobox > .sort-select.cb-anchor { width: auto; }
+.cb-anchor[aria-expanded="true"] {
+  border-color: var(--brand);
+  box-shadow: var(--focus-ring);
+}
+.cb-anchor.is-placeholder .cb-value { color: #b0b5bd; }
+.cb-value {
+  flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+
+.cb-popup {
+  z-index: 1000;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px rgba(15,23,42,.10), 0 1px 2px rgba(15,23,42,.04);
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  animation: cb-fade .12s ease;
+}
+@keyframes cb-fade {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cb-search-wrap {
+  padding: 8px; border-bottom: 1px solid var(--line); background: #fff;
+}
+.cb-search {
+  width: 100%; height: 34px;
+  padding: 0 12px; border: 1px solid var(--line); border-radius: 8px;
+  font: inherit; font-family: inherit; font-size: 13.5px; color: var(--ink);
+  outline: none; background: #fff;
+}
+.cb-search:focus { border-color: var(--brand); box-shadow: var(--focus-ring); }
+
+.cb-list { overflow-y: auto; padding: 4px; scrollbar-width: thin; }
+.cb-list::-webkit-scrollbar { width: 8px; }
+.cb-list::-webkit-scrollbar-thumb { background: #d4d7dc; border-radius: 8px; }
+
+.cb-option {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 10px; border-radius: 7px;
+  font-size: 13.5px; color: var(--ink); line-height: 1.35;
+  cursor: pointer; user-select: none;
+}
+.cb-option.is-active { background: var(--bg-soft); }
+.cb-option.is-selected { background: var(--brand-soft); font-weight: 600; }
+.cb-option.is-selected.is-active { background: var(--brand-soft); }
+.cb-option.is-disabled { color: var(--muted); cursor: not-allowed; opacity: .6; }
+.cb-option .cb-label {
+  flex: 1; min-width: 0;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cb-option .cb-check { color: var(--brand); flex-shrink: 0; }
+
+.cb-empty {
+  padding: 18px 14px; text-align: center;
+  font-size: 13px; color: var(--muted);
+}
+
+/* ------------------------------------------------------------
+   DATEPICKER — custom calendar input (DD.MM.YYYY)
+   Anatomy:
+     <div class="dp">
+       <div class="dp-input"><input class="input"/><button class="dp-btn"/></div>
+       <div class="dp-pop">
+         <div class="dp-head">… nav + title …</div>
+         <div class="dp-wdays">…</div>
+         <div class="dp-grid"><button class="dp-day"/>…</div>
+         <div class="dp-foot">…</div>
+       </div>
+     </div>
+   ------------------------------------------------------------ */
+.dp { position: relative; display: block; }
+.dp-input { position: relative; display: block; }
+.dp-input .input { padding-right: 44px; font-variant-numeric: tabular-nums; }
+.dp-input.is-open .input { border-color: var(--brand); box-shadow: var(--focus-ring); }
+.dp-btn {
+  position: absolute; right: 4px; top: 50%; transform: translateY(-50%);
+  width: 34px; height: 34px;
+  background: transparent; border: 0; border-radius: 8px;
+  color: var(--ink-2); cursor: pointer; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: background .12s ease, color .12s ease;
+}
+.dp-btn:hover { background: var(--bg-soft); color: var(--brand); }
+.dp-input.is-open .dp-btn { color: var(--brand); }
+
+.dp-pop {
+  position: absolute; left: 0; top: calc(100% + 6px);
+  z-index: 80;
+  width: 320px; max-width: 100vw;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.12);
+  padding: 14px;
+  font-size: 13px;
+  user-select: none;
+  animation: dp-pop-in .14s ease-out;
+}
+@keyframes dp-pop-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.dp-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 6px; margin-bottom: 10px;
+}
+.dp-nav, .dp-nav-spacer {
+  width: 32px; height: 32px; flex-shrink: 0;
+}
+.dp-nav {
+  background: transparent; border: 0; border-radius: 8px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ink-2); cursor: pointer; padding: 0;
+  transition: background .12s ease, color .12s ease;
+}
+.dp-nav:hover { background: var(--bg-soft); color: var(--ink); }
+
+.dp-title {
+  flex: 1;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 4px;
+  font-weight: 600; color: var(--ink); font-size: 14px;
+}
+.dp-mname, .dp-yname {
+  background: transparent; border: 0; padding: 6px 10px; border-radius: 8px;
+  font: inherit; font-weight: 600; color: inherit; cursor: pointer;
+  transition: background .12s ease;
+}
+.dp-mname:hover, .dp-yname:hover { background: var(--bg-soft); }
+.dp-yname.is-static { cursor: default; padding: 6px 10px; }
+.dp-yname.is-static:hover { background: transparent; }
+
+.dp-wdays {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px;
+  font-size: 11px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+.dp-wdays > span { text-align: center; padding: 4px 0; }
+
+.dp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.dp-day {
+  height: 36px;
+  background: transparent; border: 0; border-radius: 8px;
+  font: inherit; font-size: 13px; color: var(--ink);
+  cursor: pointer; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-variant-numeric: tabular-nums;
+  transition: background .12s ease, color .12s ease, box-shadow .12s ease;
+}
+.dp-day:hover { background: var(--bg-soft); }
+.dp-day.is-dim { color: #c9cdd3; }
+.dp-day.is-today {
+  box-shadow: inset 0 0 0 1px var(--line);
+  font-weight: 600;
+}
+.dp-day.is-sel {
+  background: var(--brand); color: #fff; font-weight: 600;
+  box-shadow: none;
+}
+.dp-day.is-sel:hover { background: #0aa85c; }
+
+.dp-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.dp-months, .dp-years {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+}
+.dp-month, .dp-year {
+  height: 44px;
+  background: transparent; border: 0; border-radius: 8px;
+  font: inherit; font-size: 13px; color: var(--ink); cursor: pointer;
+  font-variant-numeric: tabular-nums;
+  transition: background .12s ease, color .12s ease;
+}
+.dp-month:hover, .dp-year:hover { background: var(--bg-soft); }
+.dp-month.is-sel, .dp-year.is-sel {
+  background: var(--brand); color: #fff; font-weight: 600;
+}
+
+/* ============================================================
+   FILTER TOOLBAR — soft track + pill toggles
+   Canonical row of filters (used on Blog, Testimonials, etc.)
+   Anatomy:
+     .filter-toolbar             — soft grey rounded track that wraps the row
+     .filter-pill                — single pill (button or div+caret)
+     .filter-pill.is-active      — currently selected / dropdown-open
+     .filter-pill.has-value      — has selections (e.g. 2 categories chosen)
+     .filter-pill .caret         — optional dropdown caret
+     .filter-pill .pill-count    — small green count badge inside pill
+   ============================================================ */
+.filter-toolbar {
+  display: flex; flex-wrap: wrap;
+  align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background: var(--bg-soft);
+  border-radius: var(--radius);
+  font: inherit;
+  margin-bottom: 28px;
+}
+
+.filter-pill {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--chip-radius);
+  font: inherit; font-size: 13px; font-weight: 500;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: border-color .15s ease, color .15s ease, background .15s ease;
+}
+.filter-pill:hover { border-color: var(--ink); color: var(--ink); }
+.filter-pill:focus-visible { outline: 0; box-shadow: var(--focus-ring); }
+
+.filter-pill.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #fff;
+}
+.filter-pill.has-value {
+  border-color: var(--ink);
+  color: var(--ink);
+  font-weight: 600;
+}
+.filter-pill.is-active.has-value { color: #fff; }
+
+.filter-pill .caret {
+  width: 7px; height: 7px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg) translate(-1px,-1px);
+}
+
+.filter-pill .pill-count {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 999px;
+  background: var(--brand); color: #fff;
+  font-size: 11px; font-weight: 700;
+  line-height: 1;
+}

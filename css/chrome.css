@@ -1,0 +1,471 @@
+/* In&Out Consulting — shared chrome (tokens, reset, header, footer) */
+
+:root {
+  --ink: #111418;
+  --ink-2: #3a3f47;
+  --muted: #6b7280;
+  --line: #e7e7e7;
+  --bg: #ffffff;
+  --bg-soft: #f6f7f8;
+  --brand: #0fbf6a;       /* In&Out green (approx) */
+  --brand-soft: #c9f5dd;
+  --brand-deep: #0a6c3d;
+  --highlight: #0ddd86;   /* highlight-stroke only — never use as fill */
+  --accent: #ff5a3c;       /* CTA orange */
+  --radius: 14px;
+
+  /* Interactive-card hover — the ONE standard (light elevation + neutral border).
+     Use these three together on every clickable card's :hover.
+     Do NOT use brand-green on hover (green = selected/active/CTA only). */
+  --hover-border: #cfd2d8;                      /* neutral, one step darker than --line */
+  --hover-lift: translateY(-2px);               /* light lift */
+  --hover-shadow: 0 10px 24px rgba(15,23,42,0.07); /* soft, light shadow */
+}
+
+/* ---------- Highlight stroke — canonical (do not redeclare per-page) ----------
+   Place <span class="hl"> around exactly one verb/word in a hero H1 or section H2.
+   One word max (two only for a German compound noun). Never on body copy. */
+.hl { position: relative; display: inline-block; isolation: isolate; padding: 0 4px; }
+.hl::before {
+  content: ""; position: absolute;
+  left: -4px; right: -4px; bottom: 0.10em;
+  height: 0.42em; background-color: var(--highlight);
+  border-radius: 3px; z-index: -1;
+}
+
+/* Canonical helper: add .card-hoverable to any clickable card surface.
+   (Existing card classes are wired to the same tokens directly.) */
+.card-hoverable { transition: border-color .18s ease, transform .18s ease, box-shadow .18s ease; }
+.card-hoverable:hover {
+  border-color: var(--hover-border);
+  transform: var(--hover-lift);
+  box-shadow: var(--hover-shadow);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: "Poppins", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+
+/* ---------- Accessibility: visually-hidden heading/label ----------
+   Use for semantic section headings that the design shows implicitly
+   (e.g. a results list or filter region). Keeps the heading outline
+   valid without changing the visual layout. */
+.sr-only {
+  position: absolute !important;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0, 0, 0, 0);
+  white-space: nowrap; border: 0;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ---------- Top Nav (In&Out brand) ---------- */
+.topbar { border-bottom: 1px solid var(--line); background: #fff; position: sticky; top: 0; z-index: 50; }
+.topbar-inner { max-width: 1280px; margin: 0 auto; padding: 0 32px; height: 68px; display: flex; align-items: stretch; justify-content: space-between; gap: 32px; }
+.brand-mark {
+  display: inline-flex; align-items: center; justify-content: center;
+  line-height: 0;
+}
+.brand-mark img { display: block; height: 38px; width: auto; }
+.brand-mark.footer-logo img { height: 48px; }
+.nav-links { display: flex; align-items: stretch; gap: 4px; }
+.nav-links a:not(.nav-cta) {
+  color: var(--ink-2); padding: 0 6px; margin: 0 14px;
+  position: relative; display: inline-flex; align-items: center; gap: 6px;
+  cursor: pointer; font-size: 14px; font-weight: 500;
+  transition: color .15s ease;
+}
+.nav-links a:not(.nav-cta) .chev { width: 9px; height: 9px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg) translate(-2px,-2px); display: inline-block; opacity: .7;}
+.nav-links a:not(.nav-cta):hover { color: var(--ink); }
+.nav-links a:not(.nav-cta).active { color: var(--ink); font-weight: 600; }
+.nav-links a:not(.nav-cta).active::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px;
+  background: var(--brand); border-radius: 3px 3px 0 0;
+}
+.nav-links a:not(.nav-cta):not(.active):hover::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 3px;
+  background: var(--brand); border-radius: 3px 3px 0 0; opacity: .35;
+}
+.nav-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 9px 16px; border-radius: 10px; font-weight: 600; font-size: 14px;
+  background: var(--ink); color: #fff; border: 1px solid var(--ink);
+  cursor: pointer; transition: background .15s ease;
+  font-family: inherit; align-self: center;
+}
+.nav-cta:hover { background: #000; color: #fff; }
+.nav-cta::after { display: none !important; }
+
+/* ---------- Mega menu (full-bleed, content aligned with the 1280px topbar container) ---------- */
+.nav-links { position: relative; }
+.nav-item { position: relative; display: inline-flex; align-items: stretch; }
+
+.mega-wrap {
+  position: absolute; top: 100%; left: 0; right: 0;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+  z-index: 60;
+  /* hidden by default */
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity .15s ease, transform .18s ease, visibility .18s ease;
+}
+.mega-wrap.open {
+  opacity: 1; visibility: visible; pointer-events: auto;
+  transform: translateY(0);
+}
+/* hover bridge between the nav and the panel (covers the 1px border gap) */
+.mega-wrap::before {
+  content: ""; position: absolute; left: 0; right: 0; top: -2px; height: 2px;
+}
+
+.mega-inner {
+  max-width: 1280px; margin: 0 auto; padding: 32px 32px 40px;
+}
+
+/* Multi-column panel — columns share the container evenly, first column aligns with logo */
+.mega-panel { display: grid; gap: 32px 40px; }
+.mega-panel[data-cols="1"] { grid-template-columns: minmax(0, 320px); }
+.mega-panel[data-cols="2"] { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 720px; }
+.mega-panel[data-cols="3"] { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 960px; }
+.mega-panel[data-cols="4"] { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+.mega-group { min-width: 0; }
+.mega-eyebrow {
+  font-size: 11px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.12em;
+  padding: 0 12px 12px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+.mega-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 4px; }
+.mega-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 11px 12px; border-radius: 8px;
+  text-decoration: none; color: var(--ink);
+  font-size: 14px; font-weight: 500;
+  transition: background .12s ease, color .12s ease;
+  white-space: normal;
+  line-height: 1.35;
+}
+.mega-item:hover { background: var(--bg-soft); color: var(--brand); }
+.mega-icn {
+  width: 20px; height: 20px; flex-shrink: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ink-2);
+  transition: color .12s ease;
+}
+.mega-item:hover .mega-icn { color: var(--brand); }
+.mega-icn svg { width: 20px; height: 20px; }
+
+/* nav link open state */
+.nav-links a.is-open { color: var(--ink); }
+.nav-links a.is-open .chev { transform: rotate(-135deg) translate(-2px,-2px); }
+.nav-links a .chev { transition: transform .2s ease; }
+
+/* ---------- Marketing section primitives (canonical — see docs/design/workflow.md §1) ----------
+   Promoted here from per-page <style> blocks to kill duplication (handover point 3).
+     .hero-kicker          — the brand-soft eyebrow pill above a marketing hero H1
+     .section.is-grey-band — the full-bleed bg-soft band wrapper
+     .section-head         — the kicker→H2→lead cluster (see note below)
+   .section-head is structurally scoped: the marketing flex-row only engages when a
+   `> .left` cluster is present (`:has`). The stacked landing heads (Mentoring, Early
+   Bird) and the app head (Gehaltsrechner Private) have no `.left`, so they DON'T match
+   the flex/type rules and keep their own layout — one class, structural variants, no
+   per-page forks. */
+.hero-kicker {
+  display: inline-flex; align-items: center;
+  padding: 6px 14px;
+  background: var(--brand-soft);
+  color: var(--brand-deep);
+  border-radius: 999px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+.section.is-grey-band {
+  position: relative;
+  isolation: isolate;
+  padding: 88px 0;
+  margin-top: 0;
+}
+.section.is-grey-band::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  left: calc(50% - 50vw);
+  background: var(--bg-soft);
+  z-index: -1;
+}
+
+/* Section head — canonical marketing cluster. Flex-row engages only with a `> .left`
+   child; stacked/app heads (no `.left`) keep their own layout. */
+.section-head { margin-bottom: 40px; }
+.section-head:has(> .left) {
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 32px;
+}
+.section-head > .left { max-width: 64ch; }
+.section-head .left .kicker {
+  display: inline-flex; align-items: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--brand-deep); background: var(--brand-soft);
+  padding: 5px 12px; border-radius: 999px;
+  margin-bottom: 14px; font-weight: 700;
+}
+.section-head .left h2 {
+  font-size: 40px; font-weight: 700; line-height: 1.14;
+  letter-spacing: -0.022em; margin: 0 0 12px; text-wrap: balance;
+}
+.section-head .left p {
+  font-size: 16px; color: var(--ink-2); line-height: 1.6;
+  margin: 0; max-width: 70ch;
+}
+
+/* CTA band — brand-soft "join" variant (Team / Resources / Engagement).
+   Other CTA bands (.cta-band, .inline-cta-band, .coop-band, .final-cta) are genuinely
+   distinct components — see docs/design/workflow.md §1, not drift. */
+.join-cta {
+  margin-top: 88px; background: var(--brand-soft);
+  border-radius: 22px; padding: 48px 56px;
+  display: grid; grid-template-columns: 1.4fr auto;
+  align-items: center; gap: 32px;
+  position: relative; overflow: hidden;
+}
+.join-cta::before {
+  content: ""; position: absolute; right: -80px; top: -100px;
+  width: 360px; height: 360px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(15,191,106,0.18) 0%, rgba(15,191,106,0) 70%);
+  pointer-events: none;
+}
+.join-cta h2 {
+  font-size: 32px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2;
+  margin: 0 0 8px; color: var(--ink); text-wrap: balance; max-width: 22ch;
+}
+.join-cta p {
+  font-size: 15.5px; color: var(--ink-2); line-height: 1.6;
+  margin: 0; max-width: 56ch; font-weight: 500;
+}
+.join-cta .actions { display: flex; gap: 12px; align-items: center; z-index: 1; }
+
+/* ---------- Footer (Notion-style) ---------- */
+.site-footer { border-top: 1px solid var(--line); background: #fff; padding: 64px 0 32px; }
+.footer-inner {
+  max-width: 1280px; margin: 0 auto; padding: 0 32px;
+  display: grid; grid-template-columns: 280px repeat(4, 1fr); gap: 48px;
+}
+.footer-brand .brand-mark { margin-bottom: 22px; }
+.footer-socials { display: flex; gap: 18px; margin-bottom: 28px; align-items: center; color: var(--ink); }
+.footer-socials a { color: var(--ink-2); display: inline-flex; transition: color .15s ease; }
+.footer-socials a:hover { color: var(--brand); }
+.footer-socials svg { width: 20px; height: 20px; }
+.legal-links { display: flex; gap: 18px; margin-bottom: 22px; }
+.legal-links a { font-size: 13px; color: var(--ink-2); }
+.legal-links a:hover { color: var(--ink); text-decoration: underline; }
+.copyright { font-size: 13px; color: var(--muted); }
+
+.footer-col h2 { margin: 0 0 18px; font-size: 16px; font-weight: 700; line-height: 1.2; }
+.footer-col-toggle {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  width: 100%;
+  background: none; border: 0; padding: 0; margin: 0;
+  font-family: inherit; font-size: 12px; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.06em; text-align: left;
+  cursor: default;
+}
+.fc-chev { display: none; width: 18px; height: 18px; flex-shrink: 0; color: var(--ink-2); transition: transform .2s ease; }
+.footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.footer-col a { font-size: 14px; color: var(--ink); }
+.footer-col a:hover { color: var(--brand); }
+.footer-col .address { font-size: 14px; color: var(--ink); font-style: normal; line-height: 1.7; }
+.footer-col .address a { display: block; margin-top: 8px; word-break: break-all; }
+
+/* ---------- Back-to-top bar (phone only) ---------- */
+.footer-totop { display: none; }
+
+@media (max-width: 1100px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .footer-brand { grid-column: 1 / -1; }
+}
+
+/* ---------- Mobile hamburger toggle (hidden ≥ 901px) ---------- */
+.nav-toggle {
+  display: none;
+  width: 44px; height: 44px;
+  background: transparent; border: 0; padding: 0;
+  align-items: center; justify-content: center;
+  color: var(--ink); cursor: pointer; font-family: inherit;
+  align-self: center; margin-right: -8px; /* nudge to the visual edge */
+  -webkit-tap-highlight-color: transparent;
+}
+.nav-toggle:focus-visible { outline: 0; box-shadow: var(--focus-ring, 0 0 0 3px rgba(15,191,106,0.16)); border-radius: 8px; }
+.nav-toggle .bars { position: relative; width: 22px; height: 16px; }
+.nav-toggle .bars span {
+  position: absolute; left: 0; right: 0; height: 2px;
+  background: currentColor; border-radius: 2px;
+  transition: transform .25s ease, opacity .15s ease, top .25s ease;
+}
+.nav-toggle .bars span:nth-child(1) { top: 0; }
+.nav-toggle .bars span:nth-child(2) { top: 7px; }
+.nav-toggle .bars span:nth-child(3) { top: 14px; }
+.nav-toggle.is-open .bars span:nth-child(1) { top: 7px; transform: rotate(45deg); }
+.nav-toggle.is-open .bars span:nth-child(2) { opacity: 0; }
+.nav-toggle.is-open .bars span:nth-child(3) { top: 7px; transform: rotate(-45deg); }
+
+/* ---------- Mobile menu sheet ---------- */
+.mobile-menu {
+  position: fixed; left: 0; right: 0; top: var(--mobile-topbar-h, 60px); bottom: 0;
+  background: #fff;
+  z-index: 55;
+  display: flex; flex-direction: column;
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity .2s ease, transform .25s ease, visibility .25s;
+}
+.mobile-menu.open { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+
+.mobile-menu-scroll {
+  flex: 1; overflow-y: auto;
+  padding: 4px 0 24px;
+  -webkit-overflow-scrolling: touch;
+}
+.mobile-menu-footer {
+  padding: 16px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--line);
+  background: #fff;
+}
+
+.m-nav-item { border-bottom: 1px solid var(--bg-soft); }
+.m-nav-item:last-child { border-bottom: 0; }
+
+.m-nav-row {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 14px; font-weight: 600; letter-spacing: 0.06em;
+  color: var(--ink);
+  background: transparent; border: 0; font-family: inherit;
+  text-align: left; cursor: pointer;
+  min-height: 56px;
+  -webkit-tap-highlight-color: transparent;
+}
+.m-nav-row.is-active { color: var(--brand); }
+.m-nav-row .chev-m {
+  width: 9px; height: 9px;
+  border-right: 1.5px solid var(--muted);
+  border-bottom: 1.5px solid var(--muted);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform .2s ease;
+  margin-right: 4px;
+}
+.m-nav-item.is-open .m-nav-row .chev-m {
+  transform: rotate(-135deg) translate(-2px, -2px);
+  border-color: var(--ink);
+}
+
+.m-nav-panel {
+  max-height: 0; overflow: hidden;
+  padding: 0 20px;
+  transition: max-height .28s ease, padding .2s ease;
+}
+.m-nav-item.is-open .m-nav-panel {
+  max-height: 1200px;
+  padding: 0 20px 14px;
+}
+
+.m-group + .m-group { margin-top: 14px; }
+.m-group-title {
+  font-size: 11px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.12em;
+  margin: 8px 8px 6px;
+}
+.m-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px; }
+.m-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 8px;
+  border-radius: 8px;
+  color: var(--ink); font-size: 15px; font-weight: 500;
+  min-height: 44px;
+  text-decoration: none;
+}
+.m-item:active { background: var(--bg-soft); }
+.m-item .mega-icn { width: 20px; height: 20px; color: var(--ink-2); }
+.m-item .mega-icn svg { width: 20px; height: 20px; }
+
+/* Body scroll lock when menu open */
+html.has-mobile-menu, body.has-mobile-menu { overflow: hidden; }
+
+/* ---------- Mobile breakpoint ---------- */
+@media (max-width: 900px) {
+  .topbar-inner {
+    padding: 0 16px;
+    height: 60px;
+    gap: 12px;
+  }
+  .brand-mark img { height: 30px; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-toggle { display: inline-flex; }
+  /* hide any open desktop mega-panel that React might leave around */
+  .mega-wrap { display: none !important; }
+}
+
+/* ---------- Footer mobile collapse ---------- */
+@media (max-width: 600px) {
+  /* Back-to-top bar — full-width brand-highlight strip above the footer */
+  .footer-totop {
+    display: flex; align-items: center; justify-content: center;
+    width: 100%; border: 0; cursor: pointer;
+    background: #0ddd86; color: #fff;
+    padding: 6px 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .footer-totop svg { width: 19px; height: 19px; }
+  .footer-totop:active { background: #0bc778; }
+
+  .site-footer { padding: 0 0 28px; }
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 0 20px;
+  }
+  /* Order: dropdowns first, then the brand block (logo / socials / legal) */
+  .footer-col  { order: 1; }
+  .footer-brand { order: 2; grid-column: auto; margin: 32px 0 0; text-align: center; }
+  .footer-brand .brand-mark { display: inline-flex; }
+  .footer-socials, .legal-links { justify-content: center; }
+  .brand-mark.footer-logo img { height: 40px; }
+
+  /* Accordion rows — full-bleed dividers spanning the whole viewport width */
+  .footer-col {
+    margin: 0 -20px;
+    padding: 0 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .footer-col h2 { margin: 0; }
+  .footer-col-toggle {
+    cursor: pointer;
+    padding: 16px 2px;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .fc-chev { display: block; }
+  .footer-col.is-open .fc-chev { transform: rotate(180deg); }
+
+  .footer-col ul,
+  .footer-col .address {
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height .28s ease, opacity .2s ease, padding .2s ease;
+    padding: 0 2px;
+  }
+  .footer-col.is-open ul,
+  .footer-col.is-open .address {
+    max-height: 460px;
+    opacity: 1;
+    padding: 0 2px 18px;
+  }
+  .footer-col ul a, .footer-col .address { font-size: 15px; }
+}

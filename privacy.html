@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Privacy Policy — Echo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/chrome.css" />
+<link rel="stylesheet" href="css/buttons.css" />
+<link rel="stylesheet" href="css/forms.css" />
+<link rel="stylesheet" href="css/site.css" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner container" style="max-width:1120px;">
+    <a href="index.html" class="brand-mark" style="font-family:'Poppins',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.02em;color:var(--ink);">echo</a>
+    <nav class="nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#how-it-works">How it works</a>
+      <a href="index.html#pricing">Pricing</a>
+    </nav>
+    <a class="nav-cta" href="https://github.com/diliniclas/echo-releases/releases/latest">Download</a>
+  </div>
+</header>
+
+<main class="legal-page container">
+  <div class="legal-head">
+    <h1>Privacy Policy</h1>
+    <p class="updated">Last updated: June 25, 2026</p>
+  </div>
+
+  <div class="legal-callout">
+    <strong>Draft, not yet legally reviewed.</strong> This describes how Echo's data flows
+    actually work today, verified directly against the code rather than guessed. It has not been
+    reviewed by a lawyer — have counsel confirm it meets GDPR's requirements (legal basis,
+    retention periods, your supervisory authority) before relying on it for real users.
+  </div>
+
+  <div class="legal-body">
+
+    <h2>1. Who controls your data</h2>
+    <p>
+      Bright Peak GmbH, Kürnbergstraße 32a, 81369 München, Germany (HRB 286591), is the data
+      controller for the Service. Contact us at
+      <a href="mailto:contact@echotxt.ai">contact@echotxt.ai</a> for any privacy request.
+    </p>
+
+    <h2>2. What we collect, and why</h2>
+    <p><strong>Account data.</strong> Your email address, used to sign you in (a one-time code,
+      no password) and to identify your subscription. Stored in our database (hosted on
+      Supabase) for as long as your account exists.</p>
+    <p><strong>Message content, when you use Echo.</strong> When you press a hotkey, Echo may
+      capture a screenshot of the active application window (Modes A/B) or just the text you
+      type (Mode C — templates). This is sent to our backend, which forwards it to Anthropic's
+      Claude API to draft a reply, then returns the draft to you.
+      <strong>We do not store the screenshot or the message content</strong> — it is processed
+      to generate your draft and then discarded on our side. Anthropic processes it under their
+      own API terms as our AI sub-processor; we do not control how long Anthropic itself retains
+      API request data, and recommend checking
+      <a href="https://www.anthropic.com/legal/commercial-terms" target="_blank" rel="noopener">Anthropic's commercial terms</a>
+      directly for their current policy.</p>
+    <p><strong>Usage metadata.</strong> We log how many replies you draft each month, which mode
+      and AI model were used, and token counts — needed to enforce plan limits and to understand
+      our own AI costs. This does not include the message content itself, only counts.</p>
+    <p><strong>Personal context you configure.</strong> Tone-of-voice profiles, templates,
+      signatures, and any personal/contact details you enter in Settings are stored locally on
+      your own device, not on our servers. They're only
+      transmitted to our backend at the moment you draft a reply, as part of building that
+      reply's prompt.</p>
+    <p><strong>Billing data.</strong> If you subscribe to Premium, Stripe (our payment processor)
+      collects your payment details directly — we never see or store your full card number. We
+      store your Stripe customer/subscription IDs and subscription status to know whether you
+      have Premium access.</p>
+
+    <h2>3. Who we share data with</h2>
+    <ul>
+      <li><strong>Anthropic</strong> (Claude API) — processes message content to draft replies, as described above.</li>
+      <li><strong>Supabase</strong> — hosts our database, authentication, and backend functions (sub-processor for all account/usage/billing data above).</li>
+      <li><strong>Stripe</strong> — processes payments and manages subscriptions.</li>
+    </ul>
+    <p>We don't sell your data, and we don't share it with anyone else.</p>
+
+    <h2>4. Where your data is processed</h2>
+    <p>
+      Our sub-processors may process data outside the EU/EEA (including the United States).
+      Where that happens, we rely on the safeguards those providers offer for international
+      transfers (such as the EU Standard Contractual Clauses).
+      <span class="placeholder">[confirm current data-residency/SCC status with each provider before publishing]</span>
+    </p>
+
+    <h2>5. How long we keep data</h2>
+    <p>
+      Account and usage data: for as long as your account is active, plus a reasonable period
+      afterward for billing and legal-compliance records. Message content itself: not retained
+      by us at all, as described above. You can request deletion of your account at any time
+      (see below).
+    </p>
+
+    <h2>6. Your rights</h2>
+    <p>If you're in the EU/UK, you have the right to:</p>
+    <ul>
+      <li>Access the personal data we hold about you;</li>
+      <li>Correct inaccurate data;</li>
+      <li>Request deletion of your account and associated data;</li>
+      <li>Request a copy of your data in a portable format;</li>
+      <li>Object to or restrict certain processing;</li>
+      <li>Lodge a complaint with your local data protection supervisory authority.</li>
+    </ul>
+    <p>To exercise any of these, email <a href="mailto:contact@echotxt.ai">contact@echotxt.ai</a>.</p>
+
+    <h2>7. Children</h2>
+    <p>Echo is not directed at children, and we don't knowingly collect data from anyone under 16.</p>
+
+    <h2>8. Changes to this policy</h2>
+    <p>We'll update this page if how we handle data changes, and note the date at the top.</p>
+
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner" style="grid-template-columns:1fr;padding-top:24px;">
+    <p class="copyright">© 2026 Bright Peak GmbH. <a href="terms.html">Terms</a> · <a href="privacy.html">Privacy</a> · <a href="impressum.html">Impressum</a></p>
+  </div>
+</footer>
+
+</body>
+</html>

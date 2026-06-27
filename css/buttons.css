@@ -1,0 +1,247 @@
+/* ============================================================
+   buttons.css — canonical button system for In&Out Consulting
+   Single source of truth. Import alongside chrome.css.
+
+     <link rel="stylesheet" href="chrome.css" />
+     <link rel="stylesheet" href="buttons.css" />
+
+   Anatomy:  .btn .btn-{variant}  [.btn-{size}]  [.btn-pill]  [.btn-block]
+
+   Variants: primary | brand | secondary | ghost | danger
+   Sizes:    sm | (default) | lg
+   Shape:    pill, block (full width)
+   ============================================================ */
+
+:root {
+  --btn-radius: 10px;
+  --btn-radius-pill: 999px;
+
+  --btn-h-sm: 32px;
+  --btn-h-md: 40px;
+  --btn-h-lg: 48px;
+
+  --btn-px-sm: 12px;
+  --btn-px-md: 18px;
+  --btn-px-lg: 24px;
+
+  --btn-fs-sm: 12.5px;
+  --btn-fs-md: 14px;
+  --btn-fs-lg: 15px;
+
+  /* Brand variant colors (kept in sync with chrome.css --brand) */
+  --btn-brand:        var(--brand);
+  --btn-brand-hover:  #0aa75e;
+  --btn-brand-active: #0a8f50;
+
+  --btn-danger:       #b91c1c;
+  --btn-danger-bg:    #fef2f2;
+  --btn-danger-border:#fecaca;
+}
+
+/* ----------------------------------------------------------------
+   Base
+   NOTE: keep selector list class-only — adding `button.btn` raises
+   specificity above `.btn-primary` etc. and silently breaks variants.
+   ---------------------------------------------------------------- */
+.btn {
+  /* Layout */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  vertical-align: middle;
+
+  /* Size (default = md) */
+  height: var(--btn-h-md);
+  padding: 0 var(--btn-px-md);
+  border-radius: var(--btn-radius);
+
+  /* Type */
+  font-family: inherit;
+  font-size: var(--btn-fs-md);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  white-space: nowrap;
+
+  /* Reset */
+  background: transparent;
+  color: inherit;
+  border: 1px solid transparent;
+  cursor: pointer;
+  user-select: none;
+  -webkit-appearance: none;
+  appearance: none;
+
+  transition: background .15s ease, border-color .15s ease,
+              color .15s ease, transform .12s ease, box-shadow .15s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(15, 191, 106, 0.22);
+}
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.6;
+  transform: none;
+  box-shadow: none;
+}
+.btn svg {
+  width: 14px; height: 14px;
+  flex-shrink: 0;
+}
+
+/* ----------------------------------------------------------------
+   Sizes
+   ---------------------------------------------------------------- */
+.btn-sm {
+  height: var(--btn-h-sm);
+  padding: 0 var(--btn-px-sm);
+  font-size: var(--btn-fs-sm);
+  gap: 6px;
+}
+.btn-sm svg { width: 12px; height: 12px; }
+
+.btn-lg {
+  height: var(--btn-h-lg);
+  padding: 0 var(--btn-px-lg);
+  font-size: var(--btn-fs-lg);
+  gap: 10px;
+}
+.btn-lg svg { width: 16px; height: 16px; }
+
+/* ----------------------------------------------------------------
+   Shape & width modifiers
+   ---------------------------------------------------------------- */
+.btn-pill  { border-radius: var(--btn-radius-pill); }
+.btn-block { display: flex; width: 100%; }
+
+/* Icon-only — square button sized to its height (kebab menus, toolbar icons).
+   Pair with a variant (usually .btn-secondary or .btn-ghost). */
+.btn-icon { padding: 0; width: var(--btn-h-md); }
+.btn-icon.btn-sm { width: var(--btn-h-sm); }
+.btn-icon.btn-lg { width: var(--btn-h-lg); }
+
+/* ----------------------------------------------------------------
+   Variant: PRIMARY — dark ink, default for primary actions
+   ---------------------------------------------------------------- */
+.btn-primary {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.btn-primary:hover { background: #000; border-color: #000; }
+.btn-primary:disabled,
+.btn-primary[aria-disabled="true"] { background: #d6dadf; border-color: #d6dadf; color: #fff; }
+
+/* ----------------------------------------------------------------
+   Variant: BRAND — green, for marketing / signup conversion CTAs
+   ---------------------------------------------------------------- */
+.btn-brand {
+  background: var(--btn-brand);
+  color: var(--ink);
+  border-color: var(--btn-brand);
+}
+.btn-brand:hover {
+  color: var(--ink);
+  background: var(--btn-brand-hover);
+  border-color: var(--btn-brand-hover);
+  box-shadow: 0 8px 18px rgba(15, 191, 106, 0.22);
+}
+.btn-brand:disabled,
+.btn-brand[aria-disabled="true"] { background: #d6dadf; border-color: #d6dadf; color: #fff; box-shadow: none; }
+
+/* ----------------------------------------------------------------
+   Variant: SECONDARY — white with hairline border, neutral
+   ---------------------------------------------------------------- */
+.btn-secondary {
+  background: #fff;
+  color: var(--ink);
+  border-color: var(--line);
+}
+.btn-secondary:hover { border-color: var(--ink); }
+
+/* ----------------------------------------------------------------
+   Variant: GHOST — transparent text, lightest action
+   ---------------------------------------------------------------- */
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-2);
+  border-color: transparent;
+}
+.btn-ghost:hover { background: var(--bg-soft); color: var(--ink); }
+
+/* ----------------------------------------------------------------
+   Variant: DANGER — destructive (delete account, leave team, etc.)
+   ---------------------------------------------------------------- */
+.btn-danger {
+  background: #fff;
+  color: var(--btn-danger);
+  border-color: var(--btn-danger-border);
+}
+.btn-danger:hover {
+  background: var(--btn-danger-bg);
+  border-color: #fca5a5;
+}
+
+/* ----------------------------------------------------------------
+   Inline / link-style — for in-text actions ("Mehr erfahren →")
+   ---------------------------------------------------------------- */
+.btn-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: transparent; border: 0; padding: 2px 4px;
+  font-family: inherit; font-size: 13px; font-weight: 600; line-height: 1.4;
+  color: var(--brand-deep);
+  cursor: pointer; border-radius: 6px;
+}
+.btn-link:hover { background: var(--brand-soft); color: var(--brand-deep); }
+
+/* ----------------------------------------------------------------
+   Button group — joined toggle row (visual match to .segmented).
+   Sits on a soft track; the active button gets a white "lifted" pill.
+   ---------------------------------------------------------------- */
+.btn-group {
+  display: inline-flex;
+  padding: 3px; gap: 2px;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--btn-radius);
+}
+.btn-group > .btn,
+.btn-group > button {
+  appearance: none;
+  height: 32px; padding: 0 14px;
+  border: 0; border-radius: 7px;
+  background: transparent;
+  color: var(--ink-2);
+  font-family: inherit; font-size: 13px; font-weight: 600;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: background .15s ease, color .15s ease, box-shadow .15s ease;
+}
+.btn-group > .btn:hover,
+.btn-group > button:hover { color: var(--ink); }
+.btn-group > .btn.is-active,
+.btn-group > button.is-active {
+  background: #fff; color: var(--ink);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+}
+.btn-group.is-pill { border-radius: 999px; }
+.btn-group.is-pill > .btn,
+.btn-group.is-pill > button { border-radius: 999px; }
+
+/* ----------------------------------------------------------------
+   Mobile — large marketing CTAs stretch full-width.
+   .btn-lg is the marketing-CTA size (hero actions, inline-CTA bands,
+   gate cards). Below 640px we promote it to a block button so the
+   hit target spans the full column. Opt out with .btn-keep-inline.
+   ---------------------------------------------------------------- */
+@media (max-width: 640px) {
+  .btn-lg:not(.btn-keep-inline) {
+    display: flex;
+    width: 100%;
+  }
+}
