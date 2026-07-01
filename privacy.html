@@ -4,6 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Privacy Policy — Echo</title>
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -16,7 +18,7 @@
 
 <header class="topbar">
   <div class="topbar-inner container" style="max-width:1120px;">
-    <a href="index.html" class="brand-mark" style="font-family:'Poppins',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.02em;color:var(--ink);">echo</a>
+    <a href="index.html" class="brand-mark" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-family:'Poppins',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.02em;color:var(--ink);"><img src="assets/icon.svg" alt="Echo" width="28" height="28" style="border-radius:6px;flex-shrink:0;">echo</a>
     <nav class="nav-links">
       <a href="index.html#features">Features</a>
       <a href="index.html#how-it-works">How it works</a>
@@ -29,14 +31,7 @@
 <main class="legal-page container">
   <div class="legal-head">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: June 25, 2026</p>
-  </div>
-
-  <div class="legal-callout">
-    <strong>Draft, not yet legally reviewed.</strong> This describes how Echo's data flows
-    actually work today, verified directly against the code rather than guessed. It has not been
-    reviewed by a lawyer — have counsel confirm it meets GDPR's requirements (legal basis,
-    retention periods, your supervisory authority) before relying on it for real users.
+    <p class="updated">Last updated: July 1, 2026</p>
   </div>
 
   <div class="legal-body">
@@ -49,36 +44,72 @@
     </p>
 
     <h2>2. What we collect, and why</h2>
-    <p><strong>Account data.</strong> Your email address, used to sign you in (a one-time code,
-      no password) and to identify your subscription. Stored in our database (hosted on
-      Supabase) for as long as your account exists.</p>
+
+    <p><strong>Account data.</strong> Your email address, used to sign you in and to identify your
+      subscription. You can sign in either by email (a one-time code, no password) or via Google
+      Sign-In. When you use Google Sign-In, we receive your name, email address, and Google account
+      identifier from Google, and use them solely to create and identify your Echo account. Stored
+      in our database (hosted on Supabase) for as long as your account exists.</p>
+
     <p><strong>Message content, when you use Echo.</strong> When you press a hotkey, Echo may
-      capture a screenshot of the active application window (Modes A/B) or just the text you
-      type (Mode C — templates). This is sent to our backend, which forwards it to Anthropic's
-      Claude API to draft a reply, then returns the draft to you.
+      capture a screenshot of the active application window (Modes A/B) or just the text you type
+      (Mode C — templates). This is sent to our backend, which forwards it to Anthropic's Claude
+      API to draft a reply, then returns the draft to you.
       <strong>We do not store the screenshot or the message content</strong> — it is processed
       to generate your draft and then discarded on our side. Anthropic processes it under their
       own API terms as our AI sub-processor; we do not control how long Anthropic itself retains
       API request data, and recommend checking
       <a href="https://www.anthropic.com/legal/commercial-terms" target="_blank" rel="noopener">Anthropic's commercial terms</a>
       directly for their current policy.</p>
+
     <p><strong>Usage metadata.</strong> We log how many replies you draft each month, which mode
       and AI model were used, and token counts — needed to enforce plan limits and to understand
       our own AI costs. This does not include the message content itself, only counts.</p>
+
     <p><strong>Personal context you configure.</strong> Tone-of-voice profiles, templates,
-      signatures, and any personal/contact details you enter in Settings are stored locally on
-      your own device, not on our servers. They're only
-      transmitted to our backend at the moment you draft a reply, as part of building that
-      reply's prompt.</p>
-    <p><strong>Billing data.</strong> If you subscribe to Premium, Stripe (our payment processor)
-      collects your payment details directly — we never see or store your full card number. We
-      store your Stripe customer/subscription IDs and subscription status to know whether you
-      have Premium access.</p>
+      signatures, and personal/contact details you enter in Settings are stored on our servers
+      (Supabase) so they follow your account across devices. They are only transmitted to
+      Anthropic at the moment you draft a reply, as part of building that reply's prompt.
+      You can delete them at any time by editing your settings or requesting account deletion
+      (see Section 6).</p>
+
+    <p><strong>Gmail data (optional, if you connect your Gmail account).</strong> You can
+      optionally connect a Gmail account so Echo can read your Sent folder to generate a
+      personalized writing-style description. When you use this feature:</p>
+    <ul>
+      <li>Echo fetches a sample of your recently sent emails (plain text only) from Google's
+        Gmail API.</li>
+      <li>That text is sent to Anthropic's Claude API to produce a short style description,
+        which is then stored as your tone-of-voice profile in your Echo settings.</li>
+      <li><strong>We do not store the raw email content</strong> on our servers — it is read
+        once, passed to Anthropic for analysis, and discarded immediately.</li>
+      <li>Your Gmail OAuth tokens (the credentials that authorize read access) are stored
+        locally on your device in an encrypted file, never on our servers.</li>
+      <li>Echo's use of Gmail data is limited to this purpose only. We do not use Gmail data
+        for advertising, do not allow humans to read your emails, and do not transfer it to
+        any party other than Anthropic as described above.</li>
+      <li>You can disconnect Gmail at any time under Settings → Account. Disconnecting
+        immediately revokes Echo's access and deletes the locally stored tokens.</li>
+    </ul>
+    <p>Echo's use of data obtained through Google APIs complies with the
+      <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener">Google API Services User Data Policy</a>,
+      including the Limited Use requirements.</p>
+
+    <p><strong>Billing data.</strong> If you subscribe to a paid plan, Stripe (our payment
+      processor) collects your payment details directly — we never see or store your full card
+      number. We store your Stripe customer/subscription IDs and subscription status to know
+      whether you have paid access.</p>
 
     <h2>3. Who we share data with</h2>
     <ul>
-      <li><strong>Anthropic</strong> (Claude API) — processes message content to draft replies, as described above.</li>
-      <li><strong>Supabase</strong> — hosts our database, authentication, and backend functions (sub-processor for all account/usage/billing data above).</li>
+      <li><strong>Anthropic</strong> (Claude API) — processes message content and, when you use
+        the Gmail tone feature, sampled sent-email text, to generate drafts and writing-style
+        descriptions. Data is processed under Anthropic's API terms as our sub-processor.</li>
+      <li><strong>Google</strong> — used for optional Google Sign-In authentication and, if you
+        connect Gmail, to retrieve your sent emails via the Gmail API. Governed by
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google's Privacy Policy</a>.</li>
+      <li><strong>Supabase</strong> — hosts our database, authentication, and backend functions
+        (sub-processor for account, usage, settings, and billing data).</li>
       <li><strong>Stripe</strong> — processes payments and manages subscriptions.</li>
     </ul>
     <p>We don't sell your data, and we don't share it with anyone else.</p>
@@ -88,15 +119,15 @@
       Our sub-processors may process data outside the EU/EEA (including the United States).
       Where that happens, we rely on the safeguards those providers offer for international
       transfers (such as the EU Standard Contractual Clauses).
-      <span class="placeholder">[confirm current data-residency/SCC status with each provider before publishing]</span>
-    </p>
+</p>
 
     <h2>5. How long we keep data</h2>
     <p>
       Account and usage data: for as long as your account is active, plus a reasonable period
-      afterward for billing and legal-compliance records. Message content itself: not retained
-      by us at all, as described above. You can request deletion of your account at any time
-      (see below).
+      afterward for billing and legal-compliance records. Message content and Gmail email text:
+      not retained by us at all, as described above. Tone-of-voice profiles and other settings
+      you save are kept until you change or delete them, or until you request account deletion.
+      You can request deletion of your account at any time (see below).
     </p>
 
     <h2>6. Your rights</h2>

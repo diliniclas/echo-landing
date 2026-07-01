@@ -3,210 +3,111 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Echo — draft emails in seconds, not minutes</title>
-<meta name="description" content="Echo reads the message on your screen and drafts a reply in your tone of voice. One hotkey, any app. You always hit send." />
+<meta name="robots" content="noindex, nofollow" />
+<title>Echo — coming soon</title>
+<meta name="description" content="Echo reads the message on your screen and drafts a reply in your tone of voice. Coming soon." />
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="icon" href="assets/favicon.ico" sizes="any">
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/chrome.css" />
-<link rel="stylesheet" href="css/buttons.css" />
-<link rel="stylesheet" href="css/forms.css" />
-<link rel="stylesheet" href="css/site.css" />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #111418;
+    --muted: #6b7280;
+    --bg: #ffffff;
+    --bg-soft: #f6f7f8;
+    --brand: #0fbf6a;
+    --brand-soft: #c9f5dd;
+    --line: #e7e7e7;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    height: 100%;
+    font-family: 'Poppins', system-ui, sans-serif;
+    color: var(--ink);
+    background: linear-gradient(180deg, var(--bg) 0%, var(--bg-soft) 100%);
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+  }
+  .card {
+    max-width: 480px;
+  }
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  .brand-mark img {
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+  .pill {
+    display: inline-block;
+    margin-top: 18px;
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: var(--brand-soft);
+    color: var(--brand);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  h1 {
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 18px 0 10px;
+  }
+  p.lead {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0 0 28px;
+  }
+  .contact {
+    font-size: 14px;
+    color: var(--muted);
+    border-top: 1px solid var(--line);
+    padding-top: 18px;
+  }
+  .contact a {
+    color: var(--ink);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .contact a:hover { color: var(--brand); }
+</style>
 </head>
 <body>
-
-<header class="topbar">
-  <div class="topbar-inner container" style="max-width:1120px;">
-    <a href="/" class="brand-mark" style="font-family:'Poppins',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.02em;color:var(--ink);">echo</a>
-    <nav class="nav-links">
-      <a href="#everywhere">Everywhere you type</a>
-      <a href="#how-it-works">How it works</a>
-      <a href="#pricing">Pricing</a>
-    </nav>
-    <a class="nav-cta" href="https://github.com/diliniclas/echo-releases/releases/latest">Download for Windows</a>
-  </div>
-</header>
-
-<main>
-
-  <!-- HERO -->
-  <section class="hero container">
-    <span class="hero-kicker">FOR WINDOWS</span>
-    <h1>Draft emails in <span class="struck">minutes</span> <span class="reveal">seconds</span>.</h1>
+  <div class="card">
+    <div class="brand-mark">
+      <img src="assets/icon.svg" alt="Echo" width="40" height="40">
+      echo
+    </div>
+    <span class="pill">Coming soon</span>
+    <h1>Reply to anything, in seconds.</h1>
     <p class="lead">
-      Echo reads whatever's on your screen — an email, a chat, a text — and drafts a reply
-      in your own tone of voice. One hotkey pastes it into the reply box. You read it,
-      you hit send.
+      Echo reads whatever's on your screen and drafts a reply in your own tone of voice.
+      We're putting the finishing touches on it — check back soon.
     </p>
-    <div class="actions">
-      <a class="btn btn-brand btn-lg" href="https://github.com/diliniclas/echo-releases/releases/latest">Download for Windows</a>
-      <a class="btn btn-secondary btn-lg" href="#how-it-works">See how it works</a>
+    <div class="contact">
+      Questions? <a href="mailto:contact@echotxt.ai">contact@echotxt.ai</a>
     </div>
-
-    <div class="mode-row">
-      <span class="tag tag-brand is-upper">Direct reply</span>
-      <span class="tag tag-info is-upper">Add context</span>
-      <span class="tag tag-neutral is-upper">Insert template</span>
-    </div>
-  </section>
-
-  <!-- SECTION 2: DRAFT FASTER IN ALL YOUR APPS (animated icon wave) -->
-  <section class="section is-grey-band platform-section" id="everywhere">
-    <div class="container">
-      <h2>Draft faster in all your apps.</h2>
-      <p class="lead" style="margin:0 auto 8px;">No per-app integration to set up. If you can see the message on screen, Echo can read it and draft a reply.</p>
-    </div>
-    <div class="icon-wave">
-      <div class="icon-wave-track">
-        <span class="icon-badge" style="--i:0"><img src="assets/icons/gmail.svg" alt="Gmail" /></span>
-        <span class="icon-badge" style="--i:1"><img src="assets/icons/microsoftoutlook.svg" alt="Outlook" /></span>
-        <span class="icon-badge" style="--i:2"><img src="assets/icons/whatsapp.svg" alt="WhatsApp" /></span>
-        <span class="icon-badge" style="--i:3"><img src="assets/icons/slack.svg" alt="Slack" /></span>
-        <span class="icon-badge" style="--i:4"><img src="assets/icons/microsoftteams.svg" alt="Microsoft Teams" /></span>
-        <span class="icon-badge" style="--i:5"><img src="assets/icons/telegram.svg" alt="Telegram" /></span>
-        <span class="icon-badge" style="--i:6"><img src="assets/icons/signal.svg" alt="Signal" /></span>
-        <!-- duplicated for a seamless loop -->
-        <span class="icon-badge" style="--i:7" aria-hidden="true"><img src="assets/icons/gmail.svg" alt="" /></span>
-        <span class="icon-badge" style="--i:8" aria-hidden="true"><img src="assets/icons/microsoftoutlook.svg" alt="" /></span>
-        <span class="icon-badge" style="--i:9" aria-hidden="true"><img src="assets/icons/whatsapp.svg" alt="" /></span>
-        <span class="icon-badge" style="--i:10" aria-hidden="true"><img src="assets/icons/slack.svg" alt="" /></span>
-        <span class="icon-badge" style="--i:11" aria-hidden="true"><img src="assets/icons/microsoftteams.svg" alt="" /></span>
-        <span class="icon-badge" style="--i:12" aria-hidden="true"><img src="assets/icons/telegram.svg" alt="" /></span>
-        <span class="icon-badge" style="--i:13" aria-hidden="true"><img src="assets/icons/signal.svg" alt="" /></span>
-      </div>
-    </div>
-    <div class="container">
-      <p class="icon-cloud-caption">...and anything else you can see on screen.</p>
-    </div>
-  </section>
-
-  <!-- SECTION 3: THREE MODES -->
-  <section class="section" id="how-it-works">
-    <div class="container">
-      <div class="section-head">
-        <div class="left">
-          <span class="kicker is-mono">Three hotkeys</span>
-          <h2>Pick the mode that fits the moment.</h2>
-          <p>Each one is its own hotkey, rebindable in Settings. Use whichever matches how much control you want over a given reply.</p>
-        </div>
-      </div>
-
-      <div class="mode-grid">
-        <div class="mode-card">
-          <span class="step">Mode A</span>
-          <h3>Direct reply</h3>
-          <p>Silent, no popup. Reads the screen and pastes a draft immediately using your default tone and signature.</p>
-          <span class="hotkey">Ctrl + J</span>
-        </div>
-        <div class="mode-card">
-          <span class="step">Mode B</span>
-          <h3>Add context</h3>
-          <p>A quick popup to pick a tone of voice, a signature, and add extra context before Echo reads the screen and drafts.</p>
-          <span class="hotkey">Ctrl + O</span>
-        </div>
-        <div class="mode-card">
-          <span class="step">Mode C</span>
-          <h3>Insert template</h3>
-          <p>Pick a saved template and fill in the blanks. No screenshot, no AI call — just your own words, fast.</p>
-          <span class="hotkey">Ctrl + P</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTION 4: PRICING -->
-  <section class="section is-grey-band" id="pricing">
-    <div class="container">
-      <div class="section-head" style="justify-content:center;text-align:center;">
-        <div class="left" style="max-width:60ch;margin:0 auto;">
-          <span class="kicker is-mono">Pricing</span>
-          <h2>Start free. Upgrade if you need more.</h2>
-          <p>Every plan gets every feature — tone profiles, templates, signatures, all three modes. Plans only differ in how many replies you can draft per month.</p>
-        </div>
-      </div>
-
-      <div class="pricing-grid pricing-grid-3">
-        <div class="price-card">
-          <p class="plan-name">Free</p>
-          <p class="plan-amount">$0</p>
-          <p class="plan-cap">50 drafted replies / month</p>
-          <ul>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>All three reply modes</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>Tone of voice profiles</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>Templates &amp; signatures</li>
-          </ul>
-          <a class="btn btn-secondary btn-block" href="https://github.com/diliniclas/echo-releases/releases/latest">Download for Windows</a>
-        </div>
-        <div class="price-card is-featured">
-          <span class="price-card-badge">Most popular</span>
-          <p class="plan-name">Echo Plus</p>
-          <p class="plan-amount">$14.99<span>/month</span></p>
-          <p class="plan-cap">250 drafted replies / month</p>
-          <ul>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>Everything in Free</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>Built for daily, heavy use</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>Cancel anytime</li>
-          </ul>
-          <a class="btn btn-brand btn-block" href="https://github.com/diliniclas/echo-releases/releases/latest">Download for Windows</a>
-        </div>
-        <div class="price-card">
-          <p class="plan-name">Echo Pro</p>
-          <p class="plan-amount">$49.99<span>/month</span></p>
-          <p class="plan-cap">Unlimited drafted replies</p>
-          <ul>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>Everything in Echo Plus</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>No monthly limit</li>
-            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>Built for power users</li>
-          </ul>
-          <a class="btn btn-secondary btn-block" href="https://github.com/diliniclas/echo-releases/releases/latest">Download for Windows</a>
-        </div>
-      </div>
-      <p style="text-align:center;font-size:13px;color:var(--muted);margin-top:24px;">Upgrade anytime from inside the app — no separate signup.</p>
-    </div>
-  </section>
-
-  <!-- SECTION 5: START TODAY -->
-  <section class="container">
-    <div class="join-cta">
-      <div>
-        <h2>Start today.</h2>
-        <p>Download Echo, sign in, and draft your first reply in under a minute.</p>
-      </div>
-      <div class="actions">
-        <a class="btn btn-brand btn-lg" href="https://github.com/diliniclas/echo-releases/releases/latest">Download for Windows</a>
-      </div>
-    </div>
-  </section>
-
-</main>
-
-<footer class="site-footer">
-  <div class="footer-inner">
-    <div class="footer-brand">
-      <a href="/" class="brand-mark" style="font-family:'Poppins',sans-serif;font-size:20px;font-weight:800;letter-spacing:-0.02em;color:var(--ink);">echo</a>
-      <p style="font-size:13px;color:var(--ink-2);max-width:32ch;margin:14px 0 0;">Drafts replies in your tone of voice. You always hit send. Available for Windows — Mac coming soon.</p>
-    </div>
-    <div class="footer-col">
-      <h2>Product</h2>
-      <ul>
-        <li><a href="#everywhere">Everywhere you type</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="https://github.com/diliniclas/echo-releases/releases/latest">Download</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h2>Legal</h2>
-      <ul>
-        <li><a href="terms.html">Terms of Service</a></li>
-        <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="impressum.html">Impressum</a></li>
-      </ul>
+    <div class="contact" style="border-top:none;padding-top:12px;font-size:13px;">
+      <a href="privacy.html">Privacy Policy</a> &middot; <a href="terms.html">Terms of Service</a>
     </div>
   </div>
-  <div class="footer-inner" style="grid-template-columns:1fr;margin-top:8px;padding-top:24px;border-top:1px solid var(--line);">
-    <p class="copyright">© 2026 Bright Peak GmbH. Echo is a product of Bright Peak GmbH.</p>
-  </div>
-</footer>
-
 </body>
 </html>
