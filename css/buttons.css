@@ -30,8 +30,8 @@
 
   /* Brand variant colors (kept in sync with chrome.css --brand) */
   --btn-brand:        var(--brand);
-  --btn-brand-hover:  #0aa75e;
-  --btn-brand-active: #0a8f50;
+  --btn-brand-hover:  #0bc278;
+  --btn-brand-active: #0aa868;
 
   --btn-danger:       #b91c1c;
   --btn-danger-bg:    #fef2f2;
@@ -80,7 +80,7 @@
 .btn:active { transform: translateY(1px); }
 .btn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(15, 191, 106, 0.22);
+  box-shadow: 0 0 0 3px rgba(13, 221, 134, 0.28);
 }
 .btn:disabled,
 .btn[aria-disabled="true"] {
@@ -142,14 +142,14 @@
    ---------------------------------------------------------------- */
 .btn-brand {
   background: var(--btn-brand);
-  color: var(--ink);
+  color: #fff;
   border-color: var(--btn-brand);
 }
 .btn-brand:hover {
-  color: var(--ink);
+  color: #fff;
   background: var(--btn-brand-hover);
   border-color: var(--btn-brand-hover);
-  box-shadow: 0 8px 18px rgba(15, 191, 106, 0.22);
+  box-shadow: 0 8px 18px rgba(13, 221, 134, 0.28);
 }
 .btn-brand:disabled,
 .btn-brand[aria-disabled="true"] { background: #d6dadf; border-color: #d6dadf; color: #fff; box-shadow: none; }

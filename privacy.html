@@ -19,19 +19,14 @@
 <header class="topbar">
   <div class="topbar-inner container" style="max-width:1120px;">
     <a href="index.html" class="brand-mark" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-family:'Poppins',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.02em;color:var(--ink);"><img src="assets/icon.svg" alt="Echo" width="28" height="28" style="border-radius:6px;flex-shrink:0;">echo</a>
-    <nav class="nav-links">
-      <a href="index.html#features">Features</a>
-      <a href="index.html#how-it-works">How it works</a>
-      <a href="index.html#pricing">Pricing</a>
-    </nav>
-    <a class="nav-cta" href="https://github.com/diliniclas/echo-releases/releases/latest">Download</a>
+    <a class="nav-cta" href="https://github.com/diliniclas/echo-releases/releases/download/v0.3.4/Echo-Setup-0.3.4.exe">Download for Windows</a>
   </div>
 </header>
 
 <main class="legal-page container">
   <div class="legal-head">
     <h1>Privacy Policy</h1>
-    <p class="updated">Last updated: July 1, 2026</p>
+    <p class="updated">Last updated: July 3, 2026</p>
   </div>
 
   <div class="legal-body">
@@ -56,11 +51,15 @@
       (Mode C — templates). This is sent to our backend, which forwards it to Anthropic's Claude
       API to draft a reply, then returns the draft to you.
       <strong>We do not store the screenshot or the message content</strong> — it is processed
-      to generate your draft and then discarded on our side. Anthropic processes it under their
-      own API terms as our AI sub-processor; we do not control how long Anthropic itself retains
-      API request data, and recommend checking
-      <a href="https://www.anthropic.com/legal/commercial-terms" target="_blank" rel="noopener">Anthropic's commercial terms</a>
-      directly for their current policy.</p>
+      to generate your draft and then discarded on our side. Anthropic processes this data as
+      our sub-processor under its Data Processing Addendum (automatically incorporated into
+      Anthropic's Commercial Terms of Service). Anthropic does not use commercial API inputs
+      or outputs for model training, and deletes API inputs and outputs within 30 days by
+      default. We are actively pursuing a Zero Data Retention (ZDR) arrangement with Anthropic
+      — where message content would not be stored beyond safety screening at all — and will
+      update this notice if that arrangement changes. See
+      <a href="https://privacy.anthropic.com" target="_blank" rel="noopener">Anthropic's Privacy Center</a>
+      for current details.</p>
 
     <p><strong>Usage metadata.</strong> We log how many replies you draft each month, which mode
       and AI model were used, and token counts — needed to enforce plan limits and to understand
@@ -100,6 +99,25 @@
       number. We store your Stripe customer/subscription IDs and subscription status to know
       whether you have paid access.</p>
 
+    <h2>2a. Legal basis for processing (EU/UK)</h2>
+    <p>Under the GDPR (and UK GDPR), we process your personal data on the following legal bases:</p>
+    <ul>
+      <li><strong>Contract performance (Art. 6(1)(b) GDPR)</strong> — account data, message
+        content processed to draft replies, billing data, and tone-of-voice profiles and other
+        settings you configure. Processing this data is necessary to provide the Echo service
+        you have subscribed to.</li>
+      <li><strong>Consent (Art. 6(1)(a) GDPR)</strong> — access to your Gmail Sent folder
+        (the optional "Connect Gmail" feature). You give explicit consent at the time you
+        connect Gmail; you can withdraw it at any time by disconnecting Gmail under Settings
+        → Account.</li>
+      <li><strong>Legitimate interests (Art. 6(1)(f) GDPR)</strong> — aggregated usage
+        metadata (token counts, AI model used, reply mode) used to monitor our infrastructure
+        costs and detect abuse. Our interest in running a sustainable and secure service is
+        balanced against the low intrusiveness of aggregated, content-free metadata.</li>
+      <li><strong>Legal obligation (Art. 6(1)(c) GDPR)</strong> — billing records retained
+        for tax and commercial-law compliance (German HGB, UStG).</li>
+    </ul>
+
     <h2>3. Who we share data with</h2>
     <ul>
       <li><strong>Anthropic</strong> (Claude API) — processes message content and, when you use
@@ -116,10 +134,37 @@
 
     <h2>4. Where your data is processed</h2>
     <p>
-      Our sub-processors may process data outside the EU/EEA (including the United States).
-      Where that happens, we rely on the safeguards those providers offer for international
-      transfers (such as the EU Standard Contractual Clauses).
-</p>
+      Several of our sub-processors are based in the United States. For each, we have
+      verified that a lawful transfer mechanism under GDPR Chapter V is in place:
+    </p>
+    <ul>
+      <li><strong>Anthropic</strong> (US) — processes message content and, optionally, sampled
+        sent-email text to generate drafts. Transfer basis: <em>EU–US Data Privacy Framework
+        (DPF) adequacy decision</em> (Anthropic is a certified DPF participant), and in
+        parallel, the 2021 EU Standard Contractual Clauses (Module 2, controller-to-processor)
+        automatically incorporated via Anthropic's Data Processing Addendum (governed by Irish
+        law). A UK International Data Transfer Addendum and Swiss addendum are also
+        included.</li>
+      <li><strong>Google</strong> (US) — used for Google Sign-In and, if you connect Gmail,
+        to retrieve your sent emails. Transfer basis: <em>EU–US Data Privacy Framework (DPF)
+        adequacy decision</em> (Google LLC is a certified DPF participant, including the UK
+        Extension and Swiss–US framework).</li>
+      <li><strong>Stripe</strong> (US) — processes payments. Transfer basis: <em>Standard
+        Contractual Clauses</em> (2021 EU SCCs) via Stripe's Data Processing Agreement; Stripe
+        also participates in the EU–US Data Privacy Framework — verify current certification
+        at <a href="https://dataprivacyframework.gov" target="_blank"
+        rel="noopener">dataprivacyframework.gov</a>.</li>
+      <li><strong>Supabase</strong> (US-incorporated) — hosts our database, authentication,
+        and backend functions. Transfer basis: <em>Standard Contractual Clauses</em> (2021 EU
+        SCCs) via Supabase's Data Processing Agreement, supplemented by a Transfer Impact
+        Assessment. Note: Supabase is not currently listed as a DPF-certified organisation.
+        We have selected EU (Frankfurt) data storage as a supplementary protective measure
+        and are monitoring Supabase's DPF status.</li>
+    </ul>
+    <p>
+      You can obtain copies of the applicable Standard Contractual Clauses by contacting us
+      at <a href="mailto:contact@echotxt.ai">contact@echotxt.ai</a>.
+    </p>
 
     <h2>5. How long we keep data</h2>
     <p>

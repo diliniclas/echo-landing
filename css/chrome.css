@@ -7,10 +7,10 @@
   --line: #e7e7e7;
   --bg: #ffffff;
   --bg-soft: #f6f7f8;
-  --brand: #0fbf6a;       /* In&Out green (approx) */
+  --brand: #0ddd86;
   --brand-soft: #c9f5dd;
   --brand-deep: #0a6c3d;
-  --highlight: #0ddd86;   /* highlight-stroke only — never use as fill */
+  --highlight: #0ddd86;
   --accent: #ff5a3c;       /* CTA orange */
   --radius: 14px;
 
@@ -228,7 +228,7 @@ a { color: inherit; text-decoration: none; }
    Other CTA bands (.cta-band, .inline-cta-band, .coop-band, .final-cta) are genuinely
    distinct components — see docs/design/workflow.md §1, not drift. */
 .join-cta {
-  margin-top: 88px; background: var(--brand-soft);
+  margin-top: 88px; margin-bottom: 88px; background: var(--brand-soft);
   border-radius: 22px; padding: 48px 56px;
   display: grid; grid-template-columns: 1.4fr auto;
   align-items: center; gap: 32px;
